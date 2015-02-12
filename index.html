@@ -2,18 +2,22 @@
 <html>
 <head>
 	<meta charset=utf-8 />
-	<title>Elastic List Control</title>
+	<title>Elastic List Control with d3.js</title>
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<script src="elastic-list.js"></script>
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
-	<h1>Nobel Prize Winners</h1>
+	<div class="container">
+		<h1>Nobel Prize Winners</h1>
+		<p class="lead">This is the introductory text</p>
+		<div id="elastic-list"></div>
+		<p id="results-count" class="results-title">Results:</p>
+		<div id="results"></div>
+	</div>
 	<div id="tooltip"></div>
-	<div id="elastic-list"></div>
-	<p id="results-count" class="results-title">Results:</p>
-	<div id="results"></div>
 </body>
 </html>
