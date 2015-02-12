@@ -14,6 +14,14 @@
 		header_height = 25,
 		dimensionHeaderHeight = 40;
 
+	//
+	var trimmerAt = 35,
+		heightEmpty = "4px";
+
+	tooltip = d3.select("#mytooltip")
+        .style("visibility", "hidden")
+        .style("background-color", "#333333");
+
 	//populate main object to hold all data
 	dimensionsArray.forEach(function(dim)
 	{
@@ -39,11 +47,7 @@
 					else
 						dimensions[dim].values[d[dim]] = 1;
 			});
-		});
-
-		tooltip = d3.select("#tooltip")
-            .style("visibility", "hidden")
-            .style("background-color", "#333333");
+		});		
 
 		draw();
 	}
@@ -58,9 +62,7 @@
 			dimensions[dim].filters.add(item);
 
 		if(!existFilters())
-		{
 			d3.select(".elastic-list-filters").select("p").text("No filters applied");
-		}
 		else
 		{
 			var values = [];
@@ -117,19 +119,15 @@
 				//document is filtered if contains ALL the filter terms
 				d.__filtered__ = true;
 				for(var i=0; i<dimensionsArray.length && d.__filtered__ == true; i++)
-				{
 					if(!dimensions[dimensionsArray[i]].filters.empty())
 						d.__filtered__ = d.__filtered__ && dimensions[dimensionsArray[i]].filters.has(d[dimensionsArray[i]]);
-				}
 
 				//if document pass the filters, increase ocurrence of this document for each filter term 
 				if(d.__filtered__ == true)				
-				{
 					dimensionsArray.forEach(function(dim)
 					{
 						dimensions[dim].values[d[dim]]++;
 					});
-				}
 			});
 		}	
 		redraw();		
@@ -140,10 +138,10 @@
 	var draw = function()
 	{
 		margin = {top: 20, right: 20, bottom: 30, left: 40},
-	    	width = 960 - margin.left - margin.right,
-    		height = 600 - margin.top - margin.bottom + header_height + dimensionHeaderHeight,
+	    	width = 1170 - margin.left - margin.right,
+    		height = 400 - margin.top - margin.bottom + dimensionHeaderHeight,
     		value_cell_padding = 1,
-    		value_cell_height = 40;
+    		value_cell_height = 37;
 	
 		x = d3.scale.ordinal()
 			.domain(dimensionsArray)
@@ -153,18 +151,10 @@
 			.scale(x)
 			.orient("bottom");
 
-		elasticList = d3.select("#elastic-list") //d3.select("body").append("div")
+		elasticList = d3.select("#elastic-list")
 			.attr("class", "elastic-list")
 			.style("width", width + "px")
 		    .style("height", height + "px");
-
-
-		//header with the active filters
-		elasticList.append("div")
-			.attr("class", "elastic-list-filters")
-			.style("height", header_height)
-			.append("p")
-				.text("No filters applied");
 
 		//dimension headers
 		elasticList.append("div")
@@ -178,6 +168,13 @@
 				.style("height", dimensionHeaderHeight + "px")
 				.text(function(d) { return d.capitalize();});
 
+		//header with the active filters
+		d3.select("#filtering").append("div")
+			.attr("class", "elastic-list-filters")
+			.style("height", header_height)
+			.append("p")
+				.text("No filters applied");
+
 		d3.select("#results")
 			.style("width", width + "px");
 
@@ -185,6 +182,12 @@
 	}
 
 
+
+	var setHeightCell = function(dimNode, d)
+	{
+		var minValue = dimNode.attributes["__minvalue__"].value;
+		return (d.value == 0)? heightEmpty : (value_cell_height + (d.value/minValue)) + "px";
+	}
 
 	var redraw = function()
 	{
@@ -221,8 +224,7 @@
 			.duration(transitionTime)
 				.style("height", function(d)
 				{
-					var minValue = this.parentNode.attributes["__minvalue__"].value;
-					return (d.value == 0)? "2px" : (value_cell_height + (d.value/minValue)) + "px";
+					return setHeightCell(this.parentNode, d);
 				})
 				.style("top", function(d,i)
 				{
@@ -234,7 +236,7 @@
 			.append("div")
 			.attr("class", "elastic-list-dimension")
 			.style("width", x.rangeBand() + "px")
-			.style("height", (height - header_height - dimensionHeaderHeight) + "px")
+			.style("height", (height - dimensionHeaderHeight) + "px")
 			.attr("__minvalue__", getMinValueDimension)
 			.selectAll(".elastic-list-dimension-item")
 			.data(getValuesDimension);
@@ -244,8 +246,7 @@
 			.attr("class", "elastic-list-dimension-item")
 			.style("height", function(d)
 			{
-				var minValue = this.parentNode.attributes["__minvalue__"].value;
-				return (d.value == 0)? "2px" : (value_cell_height + (d.value/minValue)) + "px";
+				return setHeightCell(this.parentNode, d);
 			})
 			.style("width", x.rangeBand() + "px")
 			.style("left", 0)
@@ -261,13 +262,19 @@
 	                  .html(d.key + ": no matchings")
 	                  .style("visibility", "visible");          
 				}
+				else if(d3.select(this).text().indexOf("...") > -1)
+				{
+					tooltip
+	                  .html(d.key + ": " + d.value)
+	                  .style("visibility", "visible");          	
+				}
               	
 
 				d3.select(this).classed("elastic-list-dimension-item-hover", true);
 			})
 			.on("mousemove", function(d)
 			{
-				if(d.value == 0)
+				if(d.value == 0 || d3.select(this).text().indexOf("...") > -1)
 					tooltip.style("top", (d3.event.pageY - 20)+"px").style("left",(d3.event.pageX + 5)+"px");  
 			})
 			.on("mouseout", function(d)
@@ -277,6 +284,8 @@
 			})
 			.on("click", function(d)
 			{
+				tooltip.style("visibility", "hidden");
+
 				//send filter to add and its dimension
 				updateFilters(this.parentNode.__data__.key, d.key);
 
@@ -296,7 +305,7 @@
 			if(d.value >0)
 			{
 				d3.select(this).append("p")
-					.html(d.key)
+					.html((d.key.length > trimmerAt)?	d.key.substring(0,trimmerAt) + "...":d.key)
 					.style("opacity", 0)
 					.attr('class', 'key')
 					.transition()
@@ -325,10 +334,10 @@
 		d3.select("#results-count").html("Found " + d3.select("#results").selectAll("p")[0].length);		
 	}
 
-	d3.csv("nobel_prizes.csv", onDataLoaded);
-
 	String.prototype.capitalize = function() 
 	{
     	return this.charAt(0).toUpperCase() + this.slice(1);
 	}
+
+	d3.csv("nobel_prizes.csv", onDataLoaded);
 }());

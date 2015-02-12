@@ -1,26 +1,25 @@
 @elastic-list-border: 1px solid grey;
 @spacing-texts: 4px 0 0 5px;
 @font: "Arial";
+@color-selected-item: #00ccff;
+@border-dotted: 1px dotted black;
 
 body {
 	background-color: ghostwhite;
 }
-h1 {
-	//font-family: Arial;
-	margin-left: 5px;
-}
-#tooltip {
+
+#mytooltip {
   border: 1px solid #e0e0e0;
   padding: 5px 4px;
-  background-color: "#333333";
+  background-color: "#3d424f";
   color: white;
   position: absolute;
   font-family: @font;
   font-size: 10px;
+  max-width: 175px;
 }
 
 .elastic-list {
-	margin-bottom: 15px;
 	padding: 2px;
 	background: #f0;
   	font-family: @font;
@@ -32,16 +31,19 @@ h1 {
 		margin: 0;
 		height: 25px;
 		color: #222222;
-		background-color: darksalmon;
 		p {
 			margin: 0;
 			padding: @spacing-texts;
+		}
+		span {
+			color: @color-selected-item;
 		}
 	}
 }
 
 .elastic-list-dimension-header {
-	font-size: 14px;
+	font-size: 12px;
+	font-weight: bold;
 	float: left;
 	border: 1px solid white;
   	color: #f0f0f0;
@@ -70,7 +72,7 @@ h1 {
 		float:left;
 		display: inline;
 		&.key {
-			width: 65%
+			width: 70%
 		}
 		&.value {
 			float: right;
@@ -81,10 +83,20 @@ h1 {
 
 .elastic-list-dimension-item-hover {
 	background-color: lightgrey;
+	p {
+		font-weight: bold;
+	}
 }
 
+#filtering {
+	border-top: @border-dotted;
+	font-size: 12px;
+	font-weight: bold;
+	margin-right: 25px;
+	height: 50px;
+}
 .filter {
-	background-color: cadetblue;
+	background-color: @color-selected-item;
 }
 
 .filter-item {
@@ -95,7 +107,7 @@ h1 {
 	font-family: @font;
 	font-weight: bold;
 	margin: 0;
-
+	font-size: 12px;
 }
 
 #results {
