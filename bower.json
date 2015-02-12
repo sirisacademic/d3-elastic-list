@@ -1,0 +1,27 @@
+{
+  "name": "elastic-list",
+  "main": "elastic-list.js",
+  "version": "0.0.0",
+  "authors": [
+    "XavierGimenez <xavi@xavigimenez.net>"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.0.3",
+    "d3": "~3.4.0"
+    },
+  "description": "Faceted search using elastic-list control",
+  "keywords": [
+    "d3.js",
+    "javascript",
+    "data-visualization"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
