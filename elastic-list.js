@@ -1,3 +1,7 @@
+/**
+ * @author Xavi Gimenez / xavi@xavigimenez.net
+ */
+
 (function(){
 	//data vars
 	var dimensionsArray = ['country', 'gender', 'year', 'category', 'city', 'name'];

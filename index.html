@@ -2,16 +2,49 @@
 <html>
 <head>
 	<meta charset=utf-8 />
-	<title>Elastic List Control with d3.js</title>
+	<meta name="keywords" content="d3.js, data visualization, elastic list, faceted search">
+  	<meta name="description" content="Elastic List Control with d3.js">
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<title>Elastic List Control with d3.js</title>
 	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
 	<div class="container">
-		<h1>Nobel Prize Winners</h1>
-		<p class="lead">This is the introductory text</p>
+		<h1>Nobel Prize Winners
+		<p class="lead">Example of Elastic List for faceted search built D3.js</p>
+		</h1>
+		
+		<div class="row">
+			<div class="col-md-9">
+				<h6>Dataset: Laureates extracted from <a href="http://www.nobelprize.org/nobel_organizations/nobelmedia/nobelprize_org/developer/" target="_blank">NobelPrize.org public API.</a>
+				Code available at <img src="img/GitHub-Mark-32px.png" height="16px" width="16px"/></h6>
+			</div>
+			<div class="col-md-3 post-info-social">
+				<span class="links pull-right">
+					<ul>
+					<li><a href="http://twitter.com/home/?status=Elastic list demo with d3.js - http://www.xavigimenez.net/elastic-lists-d3/" title="Tweet this" target="_blank">
+						<img src="http://www.xavigimenez.net/blog/wp-content/themes/xavi-gimenez/images/social/twitter.png" alt="Tweet this" width="16" height="16">
+					</a></li>
+					<li><a href="http://www.facebook.com/sharer.php?u=http://www.xavigimenez.net/elastic-lists-d3/&amp;t=Elastic list demo with d3.js" title="Share on Facebook" target="_blank">
+						<img src="http://www.xavigimenez.net/blog/wp-content/themes/xavi-gimenez/images/social/facebook.png" alt="Share on Facebook" width="16" height="16">
+					</a></li>
+					<li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;title=Elastic list demo with d3.js&amp;url=http://www.xavigimenez.net/elastic-lists-d3" title="Share on LinkedIn" target="_blank">
+						<img src="http://www.xavigimenez.net/blog/wp-content/themes/xavi-gimenez/images/social/linkedin.png" alt="Share on Linkedin" width="16" height="16">
+					</a></li>
+					<li><a href="https://plus.google.com/share?url=http://www.xavigimenez.net/elastic-lists-d3" title="Share on Google+" onclick="javascript:window.open(this.href,
+	  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" target="_blank">
+						<img src="http://www.xavigimenez.net/blog/wp-content/themes/xavi-gimenez/images/social/google+.png" alt="Share on Google+" width="16" height="16">
+					</a></li>
+					<li><a href="mailto:?Subject=Check out Elastic list demo with d3.js&amp;Body=Read it at http://www.xavigimenez.net/elastic-lists-d3" title="Email this">
+						<img src="http://www.xavigimenez.net/blog/wp-content/themes/xavi-gimenez/images/social/email.png" alt="Email this" width="16" height="16">
+					</a></li>
+					</ul>
+				</span>
+			</div>
+		</div>		
+			
 		<div id="elastic-list"></div>
 		<div id="filtering"></div>
 		<p id="results-count" class="results-title">Results:</p>
