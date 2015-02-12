@@ -278,7 +278,7 @@
 			})
 			.on("mousemove", function(d)
 			{
-				if(d.value == 0 || d3.select(this).text().indexOf("...") > -1)
+				if(d.value == 0 || d3.select(this).text().indexOf("...") > -1)
 					tooltip.style("top", (d3.event.pageY - 20)+"px").style("left",(d3.event.pageX + 5)+"px");  
 			})
 			.on("mouseout", function(d)

@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     },
     copy: {
       main: {
-        src: ['*', 'img/*','!**/bower_components/**', '!bower.json', '!elastic-list.js', '!Gruntfile.js', '!**/node_modules/**', '!package.json', '!styles.less'],
+        src: ['*', 'img/*','!**/bower_components/**', '!bower.json', '!elastic-list.js', '!Gruntfile.js', '!**/node_modules/**', '!package.json', '!styles.less', '!README.md'],
         expand: true,
         cwd: '.',
         dest: 'dist/',

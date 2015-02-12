@@ -9,7 +9,7 @@
     "bootstrap": "~3.0.3",
     "d3": "~3.4.0"
     },
-  "description": "Faceted search using elastic-list control",
+  "description": "Faceted search using elastic-list control with d3.js",
   "keywords": [
     "d3.js",
     "javascript",
