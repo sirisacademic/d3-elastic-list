@@ -4,6 +4,7 @@
 
 (function(){
 	//data vars
+	var affiliationDim = ['name', 'Affiliation at the time of award'];
 	var dimensionsArray = ['country', 'gender', 'year', 'category', 'city', 'name'];
 	var dimensions = {};
 	var documents;
@@ -170,7 +171,7 @@
 				.attr("class", "elastic-list-dimension-header")
 				.style("width", x.rangeBand() + "px")
 				.style("height", dimensionHeaderHeight + "px")
-				.text(function(d) { return d.capitalize();});
+				.text(function(d) { console.log(d); return (d == affiliationDim[0])?	affiliationDim[1].capitalize() : d.capitalize();});
 
 		//header with the active filters
 		d3.select("#filtering").append("div")
@@ -271,8 +272,7 @@
 					tooltip
 	                  .html(d.key + ": " + d.value)
 	                  .style("visibility", "visible");          	
-				}
-              	
+				}              	
 
 				d3.select(this).classed("elastic-list-dimension-item-hover", true);
 			})
