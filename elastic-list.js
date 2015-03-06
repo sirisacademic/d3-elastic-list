@@ -21,7 +21,8 @@
 
 	//
 	var trimmerAt = 35,
-		heightEmpty = "4px";
+		heightEmpty = "4px",
+		sortValues = false;
 
 	tooltip = d3.select("#mytooltip")
         .style("visibility", "hidden")
@@ -34,6 +35,8 @@
 		dimensions[dim].values = {};		
 		dimensions[dim].filters = d3.set();
 	});
+
+
 
 	var onDataLoaded = function(error, csv)
 	{
@@ -135,6 +138,7 @@
 					});
 			});
 		}	
+		
 		redraw();		
 	}
 
@@ -212,7 +216,18 @@
 		}
 		var getValuesDimension = function(dimension, i)
 		{
-			return d3.entries(dimension.value.values);
+			if(!sortValues)
+				return d3.entries(dimension.value.values);
+			else
+				return d3.entries(dimension.value.values)
+					.sort(function(a, b)
+					{
+						return (a.value > b.value)?	-1:(a.value < b.value)? 1 : 0;
+					})
+					.filter(function(obj)
+					{
+						return obj.key != "";
+					});
 		}
 
 		//join new data with old elements, if any
@@ -224,18 +239,19 @@
 
 		//COL UPDATE SELECTION
 		cols.selectAll(".elastic-list-dimension-item")
-			.data(getValuesDimension)			
+			.data(getValuesDimension)
+			.classed("filter", function(d)
+				{
+					return dimensions[this.parentNode.__data__.key].filters.has(d.key);
+				})
 			.transition()
 			.duration(transitionTime)
 				.style("height", function(d)
 				{
 					return setHeightCell(this.parentNode, d);
-				});/*
-				.style("top", function(d,i)
-				{
-					return ((value_cell_height+value_cell_padding)*i) + "px";
-				})*/;
-		
+				});	
+
+
 		//COLS ENTER SELECTION, create new elements as needed 
 		var items_in_new_cols = cols.enter()
 			.append("div")
@@ -254,11 +270,7 @@
 				return setHeightCell(this.parentNode, d);
 			})
 			.style("width", x.rangeBand() + "px")
-			.style("left", 0)/*
-			.style("top", function(d,i)
-			{
-				return ((value_cell_height+value_cell_padding)*i) + "px";
-			})*/
+			.style("left", 0)
 			.on("mouseover", function(d)
 			{
 				if(d.value == 0)
