@@ -171,7 +171,7 @@
 				.attr("class", "elastic-list-dimension-header")
 				.style("width", x.rangeBand() + "px")
 				.style("height", dimensionHeaderHeight + "px")
-				.text(function(d) { console.log(d); return (d == affiliationDim[0])?	affiliationDim[1].capitalize() : d.capitalize();});
+				.text(function(d) { return (d == affiliationDim[0])?	affiliationDim[1].capitalize() : d.capitalize();});
 
 		//header with the active filters
 		d3.select("#filtering").append("div")
@@ -230,11 +230,11 @@
 				.style("height", function(d)
 				{
 					return setHeightCell(this.parentNode, d);
-				})
+				});/*
 				.style("top", function(d,i)
 				{
 					return ((value_cell_height+value_cell_padding)*i) + "px";
-				});
+				})*/;
 		
 		//COLS ENTER SELECTION, create new elements as needed 
 		var items_in_new_cols = cols.enter()
@@ -254,11 +254,11 @@
 				return setHeightCell(this.parentNode, d);
 			})
 			.style("width", x.rangeBand() + "px")
-			.style("left", 0)
+			.style("left", 0)/*
 			.style("top", function(d,i)
 			{
 				return ((value_cell_height+value_cell_padding)*i) + "px";
-			})
+			})*/
 			.on("mouseover", function(d)
 			{
 				if(d.value == 0)
